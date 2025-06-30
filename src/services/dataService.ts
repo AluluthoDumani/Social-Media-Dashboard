@@ -96,3 +96,40 @@ export const addSampleData = async (): Promise<void> => {
     console.error('Error adding sample data:', error);
   }
 };
+
+// src/services/dataService.ts
+// Add these helper functions
+export const transformFollowerData = (data: ChartData) => ({
+  labels: data.labels,
+  datasets: [{
+    label: 'Followers',
+    data: data.data,
+    borderColor: 'rgb(102, 126, 234)',
+    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+    tension: 0.4,
+    fill: true
+  }]
+});
+
+export const transformEngagementData = (data: ChartData) => ({
+  labels: data.labels,
+  datasets: [{
+    label: 'This Week',
+    data: data.data,
+    backgroundColor: [
+      'rgba(59, 130, 246, 0.8)',
+      'rgba(16, 185, 129, 0.8)', 
+      'rgba(245, 158, 11, 0.8)',
+      'rgba(239, 68, 68, 0.8)',
+      'rgba(139, 92, 246, 0.8)',
+    ],
+    borderColor: [
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(245, 158, 11)',
+      'rgb(239, 68, 68)',
+      'rgb(139, 92, 246)',
+    ],
+    borderWidth: 2
+  }]
+});

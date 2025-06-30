@@ -22,6 +22,8 @@ ChartJS.register(
   Legend
 );
 
+
+
 const FollowerChart = () => {
   // Sample data for the last 7 days
   const data = {
@@ -47,6 +49,10 @@ const FollowerChart = () => {
       title: {
         display: false,
       },
+    },
+    animation: {
+      duration: 2000,
+      easing: 'easeOutQuart' as const,
     },
     scales: {
       y: {

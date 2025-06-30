@@ -1,3 +1,4 @@
+// src/components/Charts/EngagemnetChart.tsx
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -20,33 +21,20 @@ ChartJS.register(
   Legend
 );
 
-const EngagementChart = () => {
-  // Sample engagement data
-  const data = {
-    labels: ['Likes', 'Comments', 'Shares', 'Saves', 'Messages'],
-    datasets: [
-      {
-        label: 'This Week',
-        data: [850, 120, 45, 89, 34],
-        backgroundColor: [
-          'rgba(59, 130, 246, 0.8)',
-          'rgba(16, 185, 129, 0.8)', 
-          'rgba(245, 158, 11, 0.8)',
-          'rgba(239, 68, 68, 0.8)',
-          'rgba(139, 92, 246, 0.8)',
-        ],
-        borderColor: [
-          'rgb(59, 130, 246)',
-          'rgb(16, 185, 129)',
-          'rgb(245, 158, 11)',
-          'rgb(239, 68, 68)',
-          'rgb(139, 92, 246)',
-        ],
-        borderWidth: 2,
-      },
-    ],
+interface EngagemnetChartProps {
+  data: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      borderColor: string[];
+      borderWidth: number;
+    }[];
   };
+}
 
+const EngagemnetChart = ({ data }: EngagemnetChartProps) => {
   const options = {
     responsive: true,
     plugins: {
@@ -56,6 +44,22 @@ const EngagementChart = () => {
       title: {
         display: false,
       },
+      // Add tooltip callbacks for interactivity
+      tooltip: {
+        callbacks: {
+          label: (context: any) => `${context.dataset.label}: ${context.parsed.y}`,
+          footer: (tooltipItems: any) => {
+            const total = tooltipItems[0].dataset.data.reduce((a: number, b: number) => a + b, 0);
+            const percentage = ((tooltipItems[0].parsed.y / total) * 100).toFixed(1);
+            return `Contribution: ${percentage}%`;
+          }
+        }
+      }
+    },
+    // Use the correct easing type
+    animation: {
+      duration: 2000,
+      easing: 'easeOutQuart' as const,
     },
     scales: {
       y: {
@@ -70,9 +74,20 @@ const EngagementChart = () => {
         },
       },
     },
+    // Add interactive elements
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
+    onHover: (event: any, chartElement: any) => {
+      // Add hover effects
+      if (event.native) {
+        event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+      }
+    },
   };
 
   return <Bar data={data} options={options} />;
 };
 
-export default EngagementChart;
+export default EngagemnetChart;
