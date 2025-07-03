@@ -22,24 +22,21 @@ ChartJS.register(
   Legend
 );
 
-
-
-const FollowerChart = () => {
-  // Sample data for the last 7 days
-  const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Followers',
-        data: [1150, 1180, 1200, 1220, 1205, 1234, 1250],
-        borderColor: 'rgb(102, 126, 234)',
-        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-        tension: 0.4,
-        fill: true,
-      },
-    ],
+interface FollowerChartProps {
+  data: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+      tension: number;
+      fill: boolean;
+    }[];
   };
+}
 
+const FollowerChart = ({ data }: FollowerChartProps) => {
   const options = {
     responsive: true,
     plugins: {

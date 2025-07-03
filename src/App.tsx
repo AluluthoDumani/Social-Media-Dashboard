@@ -4,11 +4,6 @@ import FollowerChart from './components/Charts/FollowerChart';
 import EngagementChart from './components/Charts/EngagemnetChart';
 
 import { addSampleData } from './services/dataService';
-import { 
-  
-  transformFollowerData,
-  transformEngagementData 
-} from './services/dataService'
 
 // Example mock data fetching (replace with real data fetching as needed)
 const mockFollowerData = {
@@ -23,6 +18,7 @@ const mockEngagementData = {
 function App() {
   const [followerData, setFollowerData] = useState<{ labels: string[]; data: number[] } | null>(null);
   const [engagementData, setEngagementData] = useState<{ labels: string[]; data: number[] } | null>(null);
+  const [activeTab, setActiveTab] = useState('analytics');
 
   useEffect(() => {
     // Replace with real data fetching logic
@@ -61,11 +57,36 @@ function App() {
         <aside className="sidebar">
           <nav>
             <ul>
-              <li>📈 Analytics</li>
-              <li>📱 Posts</li>
-              <li>👥 Followers</li>
-              <li>💬 Messages</li>
-              <li>⚙️ Settings</li>
+              <li
+                className={activeTab === 'analytics' ? 'active' : ''}
+                onClick={() => setActiveTab('analytics')}
+              >
+                📈 Analytics
+              </li>
+              <li
+                className={activeTab === 'posts' ? 'active' : ''}
+                onClick={() => setActiveTab('posts')}
+              >
+                📱 Posts
+              </li>
+              <li
+                className={activeTab === 'followers' ? 'active' : ''}
+                onClick={() => setActiveTab('followers')}
+              >
+                👥 Followers
+              </li>
+              <li
+                className={activeTab === 'messages' ? 'active' : ''}
+                onClick={() => setActiveTab('messages')}
+              >
+                💬 Messages
+              </li>
+              <li
+                className={activeTab === 'settings' ? 'active' : ''}
+                onClick={() => setActiveTab('settings')}
+              >
+                ⚙️ Settings
+              </li>
             </ul>
           </nav>
         </aside>
@@ -121,10 +142,21 @@ function App() {
                   datasets: [{
                     label: 'Engagement',
                     data: engagementData.data,
-                    borderColor: 'rgb(234, 102, 102)',
-                    backgroundColor: 'rgba(234, 102, 102, 0.1)',
-                    tension: 0.4,
-                    fill: true
+                    backgroundColor: [
+                      'rgba(234, 102, 102, 0.8)',
+                      'rgba(234, 102, 102, 0.8)',
+                      'rgba(234, 102, 102, 0.8)',
+                      'rgba(234, 102, 102, 0.8)',
+                      'rgba(234, 102, 102, 0.8)',
+                    ],
+                    borderColor: [
+                      'rgb(234, 102, 102)',
+                      'rgb(234, 102, 102)',
+                      'rgb(234, 102, 102)',
+                      'rgb(234, 102, 102)',
+                      'rgb(234, 102, 102)',
+                    ],
+                    borderWidth: 1
                   }]
                 }} />
               )}
