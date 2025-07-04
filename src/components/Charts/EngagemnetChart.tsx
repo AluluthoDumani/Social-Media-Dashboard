@@ -85,6 +85,15 @@ const EngagemnetChart = ({ data }: EngagemnetChartProps) => {
         event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
       }
     },
+    elements: {
+      bar: {
+        borderWidth: 2,
+        shadowBlur: 8,
+        shadowColor: 'rgba(255, 255, 255, 0.5)',
+        shadowOffsetX: 2,
+        shadowOffsetY: 2
+      }
+    },
   };
 
   return <Bar data={data} options={options} />;

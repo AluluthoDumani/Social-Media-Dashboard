@@ -64,6 +64,19 @@ const FollowerChart = ({ data }: FollowerChartProps) => {
         },
       },
     },
+    elements: {
+      line: {
+        borderWidth: 3,
+        shadowBlur: 10,
+        shadowColor: 'rgba(255, 255, 255, 0.5)',
+      },
+      point: {
+        radius: 5,
+        hoverRadius: 8,
+        shadowBlur: 5,
+        shadowColor: 'rgba(255, 255, 255, 0.8)',
+      },
+    },
   };
 
   return <Line data={data} options={options} />;

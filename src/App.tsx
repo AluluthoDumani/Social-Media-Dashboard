@@ -143,18 +143,18 @@ function App() {
                     label: 'Engagement',
                     data: engagementData.data,
                     backgroundColor: [
-                      'rgba(234, 102, 102, 0.8)',
-                      'rgba(234, 102, 102, 0.8)',
-                      'rgba(234, 102, 102, 0.8)',
-                      'rgba(234, 102, 102, 0.8)',
-                      'rgba(234, 102, 102, 0.8)',
+                      'rgba(40, 40, 40, 0.8)',    // Dark grey
+                      'rgba(60, 60, 60, 0.8)',    // Medium grey
+                      'rgba(80, 80, 80, 0.8)',    // Light grey
+                      'rgba(100, 100, 100, 0.8)', // Lighter grey
+                      'rgba(120, 120, 120, 0.8)'  // Lightest grey
                     ],
                     borderColor: [
-                      'rgb(234, 102, 102)',
-                      'rgb(234, 102, 102)',
-                      'rgb(234, 102, 102)',
-                      'rgb(234, 102, 102)',
-                      'rgb(234, 102, 102)',
+                      'rgba(200, 200, 200, 1)',
+                      'rgba(200, 200, 200, 1)',
+                      'rgba(200, 200, 200, 1)',
+                      'rgba(200, 200, 200, 1)',
+                      'rgba(200, 200, 200, 1)',
                     ],
                     borderWidth: 1
                   }]
