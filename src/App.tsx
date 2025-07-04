@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import FollowerChart from './components/Charts/FollowerChart';
 import EngagementChart from './components/Charts/EngagemnetChart';
+import GoalProgress from './components/Progress/GoalProgress';
+import RealTimeAlerts from './components/Alerts/RealTimeAlerts';
+import TodoList from './components/Todo/TodoList';
 
 import { addSampleData } from './services/dataService';
 
@@ -19,9 +22,13 @@ function App() {
   const [followerData, setFollowerData] = useState<{ labels: string[]; data: number[] } | null>(null);
   const [engagementData, setEngagementData] = useState<{ labels: string[]; data: number[] } | null>(null);
   const [activeTab, setActiveTab] = useState('analytics');
+  const [goals] = useState({
+    followers: { current: 1234, target: 1500 },
+    engagement: { current: 3.2, target: 4.5 },
+    posts: { current: 567, target: 600 }
+  });
 
   useEffect(() => {
-    // Replace with real data fetching logic
     setFollowerData(mockFollowerData);
     setEngagementData(mockEngagementData);
   }, []);
@@ -51,7 +58,6 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="dashboard-content">
         {/* Sidebar */}
         <aside className="sidebar">
@@ -91,8 +97,9 @@ function App() {
           </nav>
         </aside>
 
-        {/* Main Dashboard Area */}
+        {/* Main Content (updated layout) */}
         <main className="main-content">
+          {/* Stats Grid */}
           <div className="stats-grid">
             <div className="stat-card">
               <h3>Total Followers</h3>
@@ -115,51 +122,86 @@ function App() {
               <span className="stat-change">+15% this month</span>
             </div>
           </div>
-
-          {/* Charts Section */}
-          <div className="charts-section">
-            <div className="chart-container">
-              <h3>📊 Follower Growth</h3>
-              {followerData && (
-                <FollowerChart data={{
-                  labels: followerData.labels,
-                  datasets: [{
-                    label: 'Followers',
-                    data: followerData.data,
-                    borderColor: 'rgb(102, 126, 234)',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                  }]
-                }} />
-              )}
+          
+          {/* Main Content Area */}
+          <div className="content-area" style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem', flexWrap: 'wrap' }}>
+            {/* Left Column */}
+            <div className="left-column" style={{ flex: 2, minWidth: 0 }}>
+              {/* Goals Section */}
+              <div className="goals-section">
+                <h3 className="section-title">Daily Goals</h3>
+                <GoalProgress 
+                  title="Follower Target" 
+                  current={goals.followers.current} 
+                  target={goals.followers.target} 
+                  color="#667eea" 
+                />
+                <GoalProgress 
+                  title="Engagement Rate" 
+                  current={goals.engagement.current} 
+                  target={goals.engagement.target} 
+                  color="#10b981" 
+                />
+                <GoalProgress 
+                  title="Post Creation" 
+                  current={goals.posts.current} 
+                  target={goals.posts.target} 
+                  color="#f59e0b" 
+                />
+              </div>
+              
+              {/* Charts Section */}
+              <div className="charts-section">
+                <div className="chart-container">
+                  <h3>📊 Follower Growth</h3>
+                  {followerData && (
+                    <FollowerChart data={{
+                      labels: followerData.labels,
+                      datasets: [{
+                        label: 'Followers',
+                        data: followerData.data,
+                        borderColor: 'rgb(102, 126, 234)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                      }]
+                    }} />
+                  )}
+                </div>
+                <div className="chart-container">
+                  <h3>📈 Engagement Trends</h3>
+                  {engagementData && (
+                    <EngagementChart data={{
+                      labels: engagementData.labels,
+                      datasets: [{
+                        label: 'Engagement',
+                        data: engagementData.data,
+                        backgroundColor: [
+                          'rgba(40, 40, 40, 0.8)',    // Dark grey
+                          'rgba(60, 60, 60, 0.8)',    // Medium grey
+                          'rgba(80, 80, 80, 0.8)',    // Light grey
+                          'rgba(100, 100, 100, 0.8)', // Lighter grey
+                          'rgba(120, 120, 120, 0.8)'  // Lightest grey
+                        ],
+                        borderColor: [
+                          'rgba(200, 200, 200, 1)',
+                          'rgba(200, 200, 200, 1)',
+                          'rgba(200, 200, 200, 1)',
+                          'rgba(200, 200, 200, 1)',
+                          'rgba(200, 200, 200, 1)',
+                        ],
+                        borderWidth: 1
+                      }]
+                    }} />
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="chart-container">
-              <h3>📈 Engagement Trends</h3>
-              {engagementData && (
-                <EngagementChart data={{
-                  labels: engagementData.labels,
-                  datasets: [{
-                    label: 'Engagement',
-                    data: engagementData.data,
-                    backgroundColor: [
-                      'rgba(40, 40, 40, 0.8)',    // Dark grey
-                      'rgba(60, 60, 60, 0.8)',    // Medium grey
-                      'rgba(80, 80, 80, 0.8)',    // Light grey
-                      'rgba(100, 100, 100, 0.8)', // Lighter grey
-                      'rgba(120, 120, 120, 0.8)'  // Lightest grey
-                    ],
-                    borderColor: [
-                      'rgba(200, 200, 200, 1)',
-                      'rgba(200, 200, 200, 1)',
-                      'rgba(200, 200, 200, 1)',
-                      'rgba(200, 200, 200, 1)',
-                      'rgba(200, 200, 200, 1)',
-                    ],
-                    borderWidth: 1
-                  }]
-                }} />
-              )}
+            
+            {/* Right Column */}
+            <div className="right-column" style={{ flex: 1, minWidth: 300, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <RealTimeAlerts />
+              <TodoList />
             </div>
           </div>
         </main>
